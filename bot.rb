@@ -6,26 +6,11 @@ require 'pg'
 
 
 
+#ここにキー等の貼り付け--------------------
 #キー等の登録
-client_rest = Twitter::REST::Client.new do |config|
-  config.consumer_key        = "dsFcWBVjn8BS6gyKv2q6X0QSw"
-  config.consumer_secret     = "oTRyRiDash7XUfmwmJGrg1LXbeOr1jjtzZDDECt0MSuLAzDx67"
-  config.access_token        = "3758421078-JoPRu04i3hawTTwmw9ThjQ7O8ZGLy5HzBYgzmME"
-  config.access_token_secret = "y8EAWO1r4pBKTSvzfKh9itYfnsmaRVNAlSi5r8SfwyEQk"
-end
 
-client_stream = Twitter::Streaming::Client.new do |config|
-  config.consumer_key        = "dsFcWBVjn8BS6gyKv2q6X0QSw"
-  config.consumer_secret     = "oTRyRiDash7XUfmwmJGrg1LXbeOr1jjtzZDDECt0MSuLAzDx67"
-  config.access_token        = "3758421078-JoPRu04i3hawTTwmw9ThjQ7O8ZGLy5HzBYgzmME"
-  config.access_token_secret = "y8EAWO1r4pBKTSvzfKh9itYfnsmaRVNAlSi5r8SfwyEQk"
-end
 
-Amazon::Ecs.configure do |options|
-  options[:AWS_access_key_id] = "AKIAJWQHJ6XGHKTZCMHA"
-  options[:AWS_secret_key]    = "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"
-  options[:associate_tag]     = "m035f-22"
-end
+#ここまで---------------------------------
 
 
 #ここからメソッド定義
@@ -41,11 +26,6 @@ end
 def regist_sql(user_name, item_name, db)
   user_id = db.exec("select id from users where screen_name = '#{user_name}';").to_a[0].values.shift.to_i
   p user_id
-  Amazon::Ecs.configure do |options|
-    options[:AWS_access_key_id] = "AKIAJWQHJ6XGHKTZCMHA"
-    options[:AWS_secret_key]    = "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"
-    options[:associate_tag]     = "m035f-22"
-  end
 
 
   response1 = Amazon::Ecs.item_search(item_name , 
